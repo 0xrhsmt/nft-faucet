@@ -1,17 +1,34 @@
-import Image from "next/image"
-
 export default function NewPage() {
   return (
-    <main>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Hello there</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button className="btn btn-primary">Get Started</button>
-          </div>
+    <div className="container mx-auto px-4">
+      <div className="relative flex flex-col justify-center h-screen overflow-hidden">
+        <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
+          <h1 className="text-3xl font-semibold text-center text-purple-700">New Contract</h1>
+          <form className="space-y-4">
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Name</span>
+              </label>
+              <input type="text" placeholder="Name" className="w-full input input-bordered input-primary" />
+            </div>
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Symbol</span>
+              </label>
+              <input type="text" placeholder="Email Address" className="w-full input input-bordered input-primary" />
+            </div>
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Contract URI</span>
+              </label>
+              <input type="text" placeholder="Email Address" className="w-full input input-bordered input-primary" />
+            </div>
+            <div>
+              <button className="btn btn-block btn-primary">Deploy</button>
+            </div>
+          </form>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
