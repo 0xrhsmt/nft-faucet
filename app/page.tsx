@@ -1,9 +1,14 @@
+import Image from "next/image"
+
 export default function Home() {
   return (
     <>
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">NFT Faucet</a>
+
+          <a className="btn btn-ghost normal-case text-xl">
+            <Image src="/logo.png" height="38" width="38" alt="logo"></Image>
+            NFT Faucet</a>
         </div>
         <div className="flex-none">
           <button className="btn btn-square btn-ghost">
@@ -11,12 +16,15 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <main className="hero min-h-screen bg-base-200">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Hello there</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button className="btn btn-primary">Get Started</button>
+
+      <main>
+        <div className="hero min-h-screen bg-base-200">
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-5xl font-bold">Hello there</h1>
+              <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+              <button className="btn btn-primary">Get Started</button>
+            </div>
           </div>
         </div>
       </main>
