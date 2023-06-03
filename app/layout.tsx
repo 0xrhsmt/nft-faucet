@@ -5,7 +5,7 @@ import { FC } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const NavBar: FC = () => (
+const Header: FC = () => (
   <header className="navbar bg-base-100">
     <div className="flex-1">
 
@@ -45,7 +45,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={inter.className}>
-        <NavBar />
+        <Header />
         <main>
           {children}
         </main>
