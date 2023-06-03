@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function Home() {
+export default function NewPage() {
   return (
     <main>
       <div className="hero min-h-screen bg-base-200">
