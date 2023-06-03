@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@infura/sdk": "^2.4.1",
     "@rainbow-me/rainbowkit": "^1.0.1",
     "@types/node": "20.2.5",
     "@types/react": "18.2.8",
