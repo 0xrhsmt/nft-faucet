@@ -21,11 +21,9 @@ TODO
 
 ### Used Technologies
 
-* Infura
-  * NFT SDK
-  * NFT API
+* Infura NFT API
 * Vercel
-* NextJs
+* Nextjs
 
 
 ## Development
@@ -63,8 +61,9 @@ $open http://localhost:3000
 
 ## Useful Links
 
-* [Infura NFT SDK]()
-* [Vercel]()
+* [Infura NFT API](https://docs.infura.io/infura/infura-expansion-apis/nft-api)
+* [Vercel](https://vercel.com/docs)
+* [Nextjs](https://nextjs.org/docs)
 
 ## License
 
