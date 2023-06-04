@@ -12,6 +12,8 @@ const SUPPORTED_NETWORKS = [
 // TODO: Add a real image
 const metadataImage = 'https://dummyimage.com/600x400/000/fff'
 
+const contractsKey = (walletAddress: string) => `accounts:${walletAddress.toLowerCase()}:contracts`
+const contractKey = (walletAddress: string, contractAddress: string) => `accounts:${walletAddress.toLowerCase()}:contracts:${contractAddress.toLowerCase()}`
 
 export async function POST(request: Request) {
     const {
@@ -35,7 +37,7 @@ export async function POST(request: Request) {
         projectId: process.env.INFURA_API_KEY,
         secretId: process.env.INFURA_API_KEY_SECRET,
         privateKey: process.env.WALLET_PRIVATE_KEY,
-        chainId: 80001,
+        chainId: chainId,
         ipfs: {
             projectId: process.env.INFURA_IPFS_PROJECT_ID,
             apiKeySecret: process.env.INFURA_IPFS_PROJECT_SECRET,
@@ -77,8 +79,8 @@ export async function POST(request: Request) {
     });
 
     // save to KV
-    await kv.sadd(`accounts:${walletAddress}:contracts`, contractAddress);
-    await kv.hmset(`accounts:${walletAddress}:contracts:${contractAddress}`, {
+    await kv.sadd(contractsKey(walletAddress), contractAddress);
+    await kv.hmset(contractKey(walletAddress, contractAddress), {
         chainId,
         contractAddress,
         contractName,
@@ -98,14 +100,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
     const url = new URL(request.url)
-    const walletAddress = url.searchParams.get('walletAddress')
+    const walletAddress = url.searchParams.get('walletAddress') as string
 
-    const contractAddresses = await kv.smembers(`accounts:${walletAddress}:contracts`);
+    const contractAddresses = await kv.smembers(contractsKey(walletAddress));
 
     const pipeline = kv.pipeline();
 
-    contractAddresses.forEach((contractAddress) => pipeline.hgetall(`accounts:${walletAddress}:contracts:${contractAddress}`));
-    
+    contractAddresses.forEach((contractAddress) => pipeline.hgetall(contractKey(walletAddress, contractAddress)));
+
     const data = await pipeline.exec();
 
     return NextResponse.json({ data });
