@@ -1,7 +1,6 @@
 # NFT Faucet
 
-TODO:
-<img src="docs/screenshot.png" width="500"><br>
+<img src="docs/logo.png" width="200"><br>
 
 This app is a simple NFT Faucet tool.
 It allows you to deploy and mint NFTs.
