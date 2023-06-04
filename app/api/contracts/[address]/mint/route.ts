@@ -5,7 +5,7 @@ import { kv } from '@vercel/kv';
 const contractKey = (walletAddress: string, contractAddress: string) => `accounts:${walletAddress.toLowerCase()}:contracts:${contractAddress.toLowerCase()}`
 
 
-const nftImage = 'https://dummyimage.com/600x400/000/fff'
+const nftImage = 'https://github.com/0xrhsmt/nft-faucet/assets/54972320/cc8ce256-b359-46aa-8bbf-3676ce03b684'
 
 export async function POST(request: NextRequest) {
     const match = request.nextUrl.pathname.match(/\/api\/contracts\/(.*)\/mint/);

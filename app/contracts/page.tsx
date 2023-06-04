@@ -64,24 +64,37 @@ export default function IndexPage() {
   return (
     <div>
       {
-        isConnected ? (contracts.map((c) => (
-          <div key={c.contractAddress} className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src={c.metadataImage} alt="contract-image" /></figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                {c.metadataName}
-                <ChainBadge chainId={c.chainId} />
-              </h2>
-              <p>{c.metadataDescription}</p>
-              <div className="card-actions justify-end">
-                <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
-                  Details
-                </Link>
-
+        isConnected ? (
+          <div className='p-8'>
+            <div className='flex justify-between items-center mb-8'>
+              <div className='text-3xl'>
+                Contracts
               </div>
+              <Link className="btn btn-secondary" href="/contracts/new">DEPLOY NEW CONTRACT</Link>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4">
+              {contracts.map((c) => (
+                <div key={c.contractAddress} className="card w-96 bg-base-100 shadow-xl m-auto">
+                  <figure><img src={c.metadataImage} alt="contract-image" /></figure>
+                  <div className="card-body">
+                    <h2 className="card-title">
+                      {c.metadataName}
+                      <ChainBadge chainId={c.chainId} />
+                    </h2>
+                    <p>{c.metadataDescription}</p>
+                    <div className="card-actions justify-end">
+                      <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
+                        Details
+                      </Link>
+
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))) : (
+        ) : (
           openConnectModal && (
             <button className="btn btn-block btn-secondary" onClick={openConnectModal}>
               Connect Wallet

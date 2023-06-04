@@ -10,7 +10,7 @@ const SUPPORTED_NETWORKS = [
 
 
 // TODO: Add a real image
-const metadataImage = 'https://dummyimage.com/600x400/000/fff'
+const metadataImage = 'https://github.com/0xrhsmt/nft-faucet/assets/54972320/cc8ce256-b359-46aa-8bbf-3676ce03b684'
 
 const contractsKey = (walletAddress: string) => `accounts:${walletAddress.toLowerCase()}:contracts`
 const contractKey = (walletAddress: string, contractAddress: string) => `accounts:${walletAddress.toLowerCase()}:contracts:${contractAddress.toLowerCase()}`
