@@ -15,7 +15,7 @@ https://nft-faucet-ten.vercel.app/
 
 ### Demo Video
 
-TODO:
+https://youtu.be/syOuTLDub-Y
 
 ## Architecture
 
