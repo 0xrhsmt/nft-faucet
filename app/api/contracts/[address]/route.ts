@@ -36,17 +36,12 @@ export async function GET(request: NextRequest) {
     });
     const sdk = new SDK(auth);
 
-    console.log(contractAddress)
-
-    const [nfts, transfers, owners] = await Promise.all([
+    const [transfers, owners] = await Promise.all([
         // NOTE: getContractMetadata not working.
         // sdk.api.getNFTsForCollection({
         //     contractAddress,
         // }).catch(() => undefined),
 
-        sdk.api.getNFTsForCollection({
-            contractAddress,
-        }).catch(() => undefined),
         sdk.api.getTransfersByContractAddress({
             contractAddress,
         }).catch(() => undefined),
@@ -58,7 +53,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
         data: {
             contractMetadata,
-            nfts,
             transfers,
             owners
         }
