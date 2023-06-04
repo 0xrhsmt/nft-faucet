@@ -1,34 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NFT Faucet
 
-## Getting Started
+<img src="docs/screenshot.png" width="500"><br>
 
-First, run the development server:
+This is a simple app.
 
+
+## Demonstrations
+
+### Live Demo
+
+https://nft-faucet-ten.vercel.app/
+
+### Demo Video
+
+TODO
+
+## Architecture
+
+<img src="docs/architecture.png" width="500"><br>
+
+### Used Technologies
+
+* Infura
+  * NFT SDK
+  * NFT API
+* Vercel
+* NextJs
+
+
+## Development
+
+### Requirements
+
+* node　18.x
+* pnpm 8.x
+
+### Setup
+
+#### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+# duplicate the .env.sample file and edit the .env file.
+$cp .env.sample .env
+
+# install dependencies
+$pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Creating Vercel KV
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* You need to create a Vercel KV (Key-Value) and copy the environment variables related to the KV into your `.env` file.
+* ref. [Vercel KV Quickstart](https://vercel.com/docs/storage/vercel-kv/quickstart#quickstart)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+### Run
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# run dev server
+$pnpm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+$open http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Useful Links
 
-## Deploy on Vercel
+* [Infura NFT SDK]()
+* [Vercel]()
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This app is open-source and licensed under the MIT license. For more details, check the [License file](LICENSE).
