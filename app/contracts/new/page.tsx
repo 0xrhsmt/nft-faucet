@@ -5,10 +5,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { cn } from '@/libs'
 
 type Inputs = {
-  name: string,
-  symbol: string,
-  contractURI: string
+  contractName: string,
+  contractSymbol: string,
+  metadataName: string
+  metadataDescription: string
+  metadataExternalLink: string
 };
+
 
 const ErrorMessageFieldRequired = () => (<span className='text-error'>This field is required</span>)
 
@@ -18,11 +21,14 @@ export default function NewPage() {
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(async (data) => {
     const response = await fetch("/api/contracts", {
-      method: 'POST', // メソッドとして POST を選択
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // コンテンツタイプとして JSON を指定
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data) // データを JSON 形式の文字列に変換
+      body: JSON.stringify({
+        ...data,
+        chainId: 80001
+      })
     });
     console.log(await response.json())
   }, [])
@@ -35,46 +41,85 @@ export default function NewPage() {
           <h1 className="text-3xl font-semibold text-center text-purple-700">New Contract</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label className="label">
-                <span className="text-base label-text">Name</span>
-              </label>
+              <div>
+                Contract
+              </div>
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Name</span>
+                </label>
 
-              <input
-                type="text"
-                placeholder="Name"
-                className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.name })}
-                {...register("name", { required: true })}
-              />
-              {errors.name && <ErrorMessageFieldRequired />}
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractName })}
+                  {...register("contractName", { required: true })}
+                />
+                {errors.contractName && <ErrorMessageFieldRequired />}
+              </div>
+
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Symbol</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Symbol"
+                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractSymbol })}
+                  {...register("contractSymbol", { required: true })}
+                />
+                {errors.contractSymbol && <ErrorMessageFieldRequired />}
+              </div>
             </div>
 
             <div>
-              <label className="label">
-                <span className="text-base label-text">Symbol</span>
-              </label>
+              <div>
+                Metadata
+              </div>
 
-              <input
-                type="text"
-                placeholder="Symbol"
-                className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.symbol })}
-                {...register("symbol", { required: true })}
-              />
-              {errors.symbol && <ErrorMessageFieldRequired />}
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Name</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataName })}
+                  {...register("metadataName", { required: true })}
+                />
+                {errors.metadataName && <ErrorMessageFieldRequired />}
+              </div>
+
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Description</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Description"
+                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataDescription })}
+                  {...register("metadataDescription")}
+                />
+                {errors.metadataDescription && <ErrorMessageFieldRequired />}
+              </div>
+
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">External Link</span>
+                </label>
+                
+                <input
+                  type="text"
+                  placeholder="External Link"
+                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataExternalLink })}
+                  {...register("metadataExternalLink")}
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="label">
-                <span className="text-base label-text">Contract URI</span>
-              </label>
-
-              <input
-                type="text"
-                placeholder="Contract URI"
-                className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractURI })}
-                {...register("contractURI", { required: true })}
-              />
-              {errors.contractURI && <ErrorMessageFieldRequired />}
-            </div>
             <div>
               <button className="btn btn-block btn-primary">Deploy</button>
             </div>
