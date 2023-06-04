@@ -10,7 +10,7 @@ const SUPPORTED_NETWORKS = [
 
 
 // TODO: Add a real image
-const image =  'https://dummyimage.com/600x400/000/fff'
+const metadataImage = 'https://dummyimage.com/600x400/000/fff'
 
 
 export async function POST(request: Request) {
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         description: metadataDescription,
         image: await sdk.storeFile({
             // TODO
-            metadata: image,
+            metadata: metadataImage,
         }),
         external_link: metadataExternalLink,
     });
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     const contract = await sdk.loadContract({
         template: TEMPLATES.ERC721Mintable,
         contractAddress: contractAddress,
-      });
+    });
     await contract.accessControl.addAdmin({
         publicAddress: walletAddress
     });
@@ -80,14 +80,33 @@ export async function POST(request: Request) {
     await kv.sadd(`accounts:${walletAddress}:contracts`, contractAddress);
     await kv.hmset(`accounts:${walletAddress}:contracts:${contractAddress}`, {
         chainId,
+        contractAddress,
         contractName,
-        image,
-    });    
+        contractSymbol,
+        metadataName,
+        metadataDescription,
+        metadataImage,
+        metadataExternalLink,
+    });
 
-    return NextResponse.json({ data: {
-        contractAddress
-    } }, { status: 201 });
+    return NextResponse.json({
+        data: {
+            contractAddress
+        }
+    }, { status: 201 });
 }
 
 export async function GET(request: Request) {
+    const url = new URL(request.url)
+    const walletAddress = url.searchParams.get('walletAddress')
+
+    const contractAddresses = await kv.smembers(`accounts:${walletAddress}:contracts`);
+
+    const pipeline = kv.pipeline();
+
+    contractAddresses.forEach((contractAddress) => pipeline.hgetall(`accounts:${walletAddress}:contracts:${contractAddress}`));
+    
+    const data = await pipeline.exec();
+
+    return NextResponse.json({ data });
 }
