@@ -11,6 +11,9 @@ import Link from 'next/link';
 
 export default function DetailsPage() {
   const routeParams = useParams();
+  const [isLoading, setIsLoading] = useState(false)
+  const [mintInfo, setMintInfo] = useState("")
+  const [toAddress, setToAddress] = useState("")
   const [contract, setContract] = useState<any>()
   const { openConnectModal } = useConnectModal();
   const { address: walletAddress, isConnected } = useAccount()
@@ -34,11 +37,45 @@ export default function DetailsPage() {
     setContract(data)
   }, [walletAddress])
 
+  const handleMint = useCallback(async () => {
+    if (!routeParams.address || !walletAddress || isLoading || !toAddress) return
+    setIsLoading(true)
+
+    try {
+      const res = await fetch(`/api/contracts/${routeParams.address}/mint`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          walletAddress,
+          toAddress,
+        })
+      });
+      if (res.status !== 201) {
+        // TODO: handle error
+        alert('Error occurred. Please retry.')
+        return
+      }
+      const { data } = await res.json();
+
+      setMintInfo(`tx: ${data.hash}`)
+      setToAddress('')
+      fetchContract()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [routeParams, walletAddress, isLoading, toAddress, setMintInfo, setToAddress, fetchContract])
+
+  const handleChange = useCallback((event: any) => setToAddress(event.target.value), [setToAddress])
+
   useEffect(() => {
     fetchContract()
   }, [walletAddress])
 
-  
+
   return (
     <div>
       {
@@ -79,6 +116,7 @@ export default function DetailsPage() {
                   </div>
 
                   <div className="divider"></div>
+
                   <div>
                     <div>
                       Metadata
@@ -106,9 +144,38 @@ export default function DetailsPage() {
                     </div>
                   </div>
 
-                  <div className="form-control mt-6">
-                    <button className="btn btn-primary">Mint</button>
+                  <div className="divider"></div>
+
+                  Let's Mint
+                  <div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">To Address</span>
+                      </label>
+                      <input type="text" value={toAddress} className="input input-bordered w-full" onChange={handleChange} />
+                    </div>
                   </div>
+
+                  <div className="form-control mt-6">
+                    <button className="btn btn-primary" onClick={handleMint} disabled={!toAddress}>
+                      {
+                        isLoading ? (
+                          <span className="loading loading-spinner"></span>
+                        ) : (
+                          "Mint"
+                        )
+                      }
+                    </button>
+                  </div>
+
+                  {
+                    mintInfo && (
+                      <div className='mt-8'>
+                      {mintInfo}
+                    </div>
+                    )
+                  }
+
                 </div>
               </div>
 
