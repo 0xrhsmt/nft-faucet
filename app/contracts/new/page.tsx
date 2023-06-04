@@ -64,7 +64,7 @@ export default function NewPage() {
     <div className="container mx-auto px-4">
       <div className="relative flex flex-col justify-center h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-          <h1 className="text-3xl font-semibold text-center text-purple-700">New Contract</h1>
+          <h1 className="text-3xl font-semibold text-center text-secondary">New Contract</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div>
@@ -78,7 +78,7 @@ export default function NewPage() {
                 <input
                   type="text"
                   placeholder="Name"
-                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractName })}
+                  className={cn("w-full input input-bordered input-secondary", { 'input-error': !!errors.contractName })}
                   {...register("contractName", { required: true })}
                   disabled={isLoading}
                 />
@@ -93,7 +93,7 @@ export default function NewPage() {
                 <input
                   type="text"
                   placeholder="Symbol"
-                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractSymbol })}
+                  className={cn("w-full input input-bordered input-secondary", { 'input-error': !!errors.contractSymbol })}
                   {...register("contractSymbol", { required: true })}
                   disabled={isLoading}
                 />
@@ -114,7 +114,7 @@ export default function NewPage() {
                 <input
                   type="text"
                   placeholder="Name"
-                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataName })}
+                  className={cn("w-full input input-bordered input-secondary", { 'input-error': !!errors.metadataName })}
                   {...register("metadataName", { required: true })}
                   disabled={isLoading}
                 />
@@ -129,7 +129,7 @@ export default function NewPage() {
                 <input
                   type="text"
                   placeholder="Description"
-                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataDescription })}
+                  className={cn("w-full input input-bordered input-secondary", { 'input-error': !!errors.metadataDescription })}
                   {...register("metadataDescription", { required: true })}
                   disabled={isLoading}
                 />
@@ -144,7 +144,7 @@ export default function NewPage() {
                 <input
                   type="text"
                   placeholder="External Link"
-                  className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataExternalLink })}
+                  className={cn("w-full input input-bordered input-secondary", { 'input-error': !!errors.metadataExternalLink })}
                   {...register("metadataExternalLink")}
                   disabled={isLoading}
                 />
@@ -154,7 +154,7 @@ export default function NewPage() {
             <div>
               {
                 isConnected ? (
-                  <button className="btn btn-block btn-primary" disabled={!isValid}>
+                  <button className="btn btn-block btn-secondary" disabled={!isValid}>
                     {
                       isLoading ? (
                         <span className="loading loading-spinner"></span>
@@ -165,7 +165,7 @@ export default function NewPage() {
                   </button>
                 ) : (
                   openConnectModal && (
-                    <button className="btn btn-block btn-primary" onClick={openConnectModal}>
+                    <button className="btn btn-block btn-secondary" onClick={openConnectModal}>
                       Connect Wallet
                     </button>
                   )

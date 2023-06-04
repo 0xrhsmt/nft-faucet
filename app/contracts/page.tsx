@@ -24,9 +24,9 @@ type Contract = {
 const ChainBadge: React.FC<{ chainId: number }> = ({ chainId }) => {
   switch (chainId) {
     case 5:
-      return <div className="badge badge-secondary">GOERLI</div>
+      return <div className="badge badge-third">GOERLI</div>
     case 80001:
-      return <div className="badge badge-primary">MUMBAI</div>
+      return <div className="badge badge-secondary">MUMBAI</div>
     default:
       return <div className="badge badge-outline">UNKNOWN</div>
   }
@@ -74,7 +74,7 @@ export default function IndexPage() {
               </h2>
               <p>{c.metadataDescription}</p>
               <div className="card-actions justify-end">
-                <Link href={`/contracts/${c.contractAddress}`} className="btn btn-primary">
+                <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
                   Details
                 </Link>
 
@@ -83,7 +83,7 @@ export default function IndexPage() {
           </div>
         ))) : (
           openConnectModal && (
-            <button className="btn btn-block btn-primary" onClick={openConnectModal}>
+            <button className="btn btn-block btn-secondary" onClick={openConnectModal}>
               Connect Wallet
             </button>
           )

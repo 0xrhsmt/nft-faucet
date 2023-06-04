@@ -157,7 +157,7 @@ export default function DetailsPage() {
                   </div>
 
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary" onClick={handleMint} disabled={!toAddress}>
+                    <button className="btn btn-secondary" onClick={handleMint} disabled={!toAddress}>
                       {
                         isLoading ? (
                           <span className="loading loading-spinner"></span>
@@ -264,7 +264,7 @@ export default function DetailsPage() {
           </div>
         ) : (
           openConnectModal && (
-            <button className="btn btn-block btn-primary" onClick={openConnectModal}>
+            <button className="btn btn-block btn-secondary" onClick={openConnectModal}>
               Connect Wallet
             </button>
           )

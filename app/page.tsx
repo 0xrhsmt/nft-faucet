@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-5xl font-bold">Bootstrap your testnet development</h1>
           <p className="py-6">Fast and reliable. Deploy and Mint NFTs.</p>
           <div className="flex flex-row justify-center space-x-4">
-            <Link href="contracts/new" className="btn btn-primary">Deploy New NFT</Link>
+            <Link href="contracts/new" className="btn btn-secondary">Deploy New NFT</Link>
             <Link href="contracts" className="btn btn-neutral">Show YOUR NFTs</Link>
           </div>
         </div>
