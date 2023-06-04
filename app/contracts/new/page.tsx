@@ -1,8 +1,11 @@
 'use client';
 
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { cn } from '@/libs'
+import { useRouter } from 'next/navigation';
+import { useAccount, useConnect, useNetwork } from 'wagmi';
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
 
 type Inputs = {
   contractName: string,
@@ -17,22 +20,45 @@ const ErrorMessageFieldRequired = () => (<span className='text-error'>This field
 
 
 export default function NewPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+  const { push } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<Inputs>({
+    mode: 'onBlur'
+  });
+  const { openConnectModal } = useConnectModal();
+  const { address: walletAddress, isConnected } = useAccount()
+  const { chain } = useNetwork()
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(async (data) => {
-    const response = await fetch("/api/contracts", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ...data,
-        chainId: 80001
-      })
-    });
-    console.log(await response.json())
-  }, [])
+    if (!isValid || isLoading || !walletAddress || !chain?.id) return
+    setIsLoading(true)
 
+    try {
+      const res = await fetch("/api/contracts", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...data,
+          walletAddress,
+          chainId: chain.id
+        })
+      });
+
+      if (res.status !== 201) {
+        // TODO: handle error
+        alert('Error occurred. Please retry.')
+        return
+      }
+
+      push(`/contracts`)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [isValid, isLoading, walletAddress, chain?.id])
 
   return (
     <div className="container mx-auto px-4">
@@ -54,6 +80,7 @@ export default function NewPage() {
                   placeholder="Name"
                   className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractName })}
                   {...register("contractName", { required: true })}
+                  disabled={isLoading}
                 />
                 {errors.contractName && <ErrorMessageFieldRequired />}
               </div>
@@ -68,6 +95,7 @@ export default function NewPage() {
                   placeholder="Symbol"
                   className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.contractSymbol })}
                   {...register("contractSymbol", { required: true })}
+                  disabled={isLoading}
                 />
                 {errors.contractSymbol && <ErrorMessageFieldRequired />}
               </div>
@@ -88,6 +116,7 @@ export default function NewPage() {
                   placeholder="Name"
                   className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataName })}
                   {...register("metadataName", { required: true })}
+                  disabled={isLoading}
                 />
                 {errors.metadataName && <ErrorMessageFieldRequired />}
               </div>
@@ -101,27 +130,47 @@ export default function NewPage() {
                   type="text"
                   placeholder="Description"
                   className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataDescription })}
-                  {...register("metadataDescription")}
+                  {...register("metadataDescription", { required: true })}
+                  disabled={isLoading}
                 />
                 {errors.metadataDescription && <ErrorMessageFieldRequired />}
               </div>
 
               <div>
                 <label className="label">
-                  <span className="text-base label-text">External Link</span>
+                  <span className="text-base label-text">External Link (Optional)</span>
                 </label>
-                
+
                 <input
                   type="text"
                   placeholder="External Link"
                   className={cn("w-full input input-bordered input-primary", { 'input-error': !!errors.metadataExternalLink })}
                   {...register("metadataExternalLink")}
+                  disabled={isLoading}
                 />
               </div>
             </div>
 
             <div>
-              <button className="btn btn-block btn-primary">Deploy</button>
+              {
+                isConnected ? (
+                  <button className="btn btn-block btn-primary" disabled={!isValid}>
+                    {
+                      isLoading ? (
+                        <span className="loading loading-spinner"></span>
+                      ) : (
+                        "Deploy"
+                      )
+                    }
+                  </button>
+                ) : (
+                  openConnectModal && (
+                    <button className="btn btn-block btn-primary" onClick={openConnectModal}>
+                      Connect Wallet
+                    </button>
+                  )
+                )
+              }
             </div>
           </form>
         </div>

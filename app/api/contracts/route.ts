@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { SDK, Auth, TEMPLATES, Metadata } from '@infura/sdk';
+import { kv } from '@vercel/kv';
+
 
 const SUPPORTED_NETWORKS = [
     5, // Goerli
@@ -7,9 +9,14 @@ const SUPPORTED_NETWORKS = [
 ] as const
 
 
+// TODO: Add a real image
+const image =  'https://dummyimage.com/600x400/000/fff'
+
+
 export async function POST(request: Request) {
     const {
         chainId,
+        walletAddress,
         contractName,
         contractSymbol,
         metadataName,
@@ -17,7 +24,7 @@ export async function POST(request: Request) {
         metadataExternalLink
     } = await request.json();
 
-    if (!chainId || !contractName || !contractSymbol || !metadataName || !metadataDescription) {
+    if (!chainId || !walletAddress || !contractName || !contractSymbol || !metadataName || !metadataDescription) {
         throw new Error('Missing required fields');
     }
     if (!SUPPORTED_NETWORKS.indexOf(chainId)) {
@@ -35,14 +42,13 @@ export async function POST(request: Request) {
         },
     });
 
-
     const sdk = new SDK(auth);
     const collectionMetadata = Metadata.openSeaCollectionLevelStandard({
         name: metadataName,
         description: metadataDescription,
         image: await sdk.storeFile({
             // TODO
-            metadata: 'https://dummyimage.com/600x400/000/fff',
+            metadata: image,
         }),
         external_link: metadataExternalLink,
     });
@@ -61,18 +67,27 @@ export async function POST(request: Request) {
     });
     const contractAddress = newContract.contractAddress
 
-    // kv
-    // walletaddress
-    // contractaddress
-    // contractname
-    // image
-    // chainId
-    // accounts:accountAddress:contracts:contractAddress
-    // accounts:accountAddress:contracts
-    // contractAddress
+    // add admin
+    const contract = await sdk.loadContract({
+        template: TEMPLATES.ERC721Mintable,
+        contractAddress: contractAddress,
+      });
+    await contract.accessControl.addAdmin({
+        publicAddress: walletAddress
+    });
 
+    // save to KV
+    await kv.sadd(`accounts:${walletAddress}:contracts`, contractAddress);
+    await kv.hmset(`accounts:${walletAddress}:contracts:${contractAddress}`, {
+        chainId,
+        contractName,
+        image,
+    });    
 
     return NextResponse.json({ data: {
         contractAddress
-    } });
+    } }, { status: 201 });
+}
+
+export async function GET(request: Request) {
 }
