@@ -20,7 +20,6 @@ TODO:
 
 ## Architecture
 
-TODO:
 <img src="docs/architecture.png" width="500"><br>
 
 ### Used Technologies
