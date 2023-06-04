@@ -1,9 +1,12 @@
 # NFT Faucet
 
+TODO:
 <img src="docs/screenshot.png" width="500"><br>
 
-This is a simple app.
-
+This app is a simple NFT Faucet tool.
+It allows you to deploy and mint NFTs.
+Additionally, you can view a list of transaction logs related to the NFTs.
+It is very useful when developing dapps using NFTs.
 
 ## Demonstrations
 
@@ -13,10 +16,11 @@ https://nft-faucet-ten.vercel.app/
 
 ### Demo Video
 
-TODO
+TODO:
 
 ## Architecture
 
+TODO:
 <img src="docs/architecture.png" width="500"><br>
 
 ### Used Technologies
