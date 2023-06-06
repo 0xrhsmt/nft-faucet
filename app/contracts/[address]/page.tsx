@@ -80,7 +80,7 @@ export default function DetailsPage() {
     <div>
       {
         isConnected ? (
-          <div className="hero min-h-screen bg-base-200">
+          <div className="hero min-h-screen mt-[-64px] pt-[64px] bg-base-200">
             <div className="hero-content flex-col w-[700px] max-w-full py-12">
               <Link href="/contracts" className='text-lg mb-2 w-full'>
                 {"< Back"}

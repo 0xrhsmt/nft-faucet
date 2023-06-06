@@ -5,16 +5,17 @@ import { Inter } from 'next/font/google'
 import { FC } from 'react'
 import { Providers } from './providers'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const Header: FC = () => (
-  <header className="navbar bg-base-100">
+  <header className="navbar bg-base-100 relative">
     <div className="flex-1">
-
-      <a className="btn btn-ghost normal-case text-xl">
+      <Link href="/" className="btn btn-ghost normal-case text-xl">
         <Image src="/logo.png" height="38" width="38" alt="logo"></Image>
-        NFT Faucet</a>
+        NFT Faucet
+      </Link>
     </div>
     <div className="flex-none">
       <ConnectButton showBalance={false} />

@@ -87,7 +87,6 @@ export default function IndexPage() {
                       <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
                         Details
                       </Link>
-
                     </div>
                   </div>
                 </div>
