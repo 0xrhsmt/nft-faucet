@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="hero min-h-screen mt-[-64px] pt-[64px] bg-base-200">
       <div className="hero-content text-center">
-        <div className="">
+        <div>
           <h1 className="text-5xl font-bold">Bootstrap your testnet development</h1>
           <p className="py-6">Fast and reliable. Deploy and Mint NFTs.</p>
           <div className="flex flex-row justify-center space-x-4">
