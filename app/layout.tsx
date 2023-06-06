@@ -6,6 +6,8 @@ import { FC } from 'react'
 import { Providers } from './providers'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link'
+import { Toaster } from 'react-hot-toast';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -53,6 +55,7 @@ export default function RootLayout({
             {children}
           </main>
         </Providers>
+        <Toaster position="top-right" />
       </body>
     </html>
   )

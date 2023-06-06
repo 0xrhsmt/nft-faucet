@@ -6,6 +6,7 @@ import { cn } from '@/libs'
 import { useRouter } from 'next/navigation';
 import { useAccount, useConnect, useNetwork } from 'wagmi';
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
+import toast from 'react-hot-toast';
 
 type Inputs = {
   contractName: string,
@@ -18,6 +19,7 @@ type Inputs = {
 
 const ErrorMessageFieldRequired = () => (<span className='text-error'>This field is required</span>)
 
+const success = (message: string) => toast.success(message);
 
 export default function NewPage() {
   const { push } = useRouter()
@@ -51,6 +53,8 @@ export default function NewPage() {
         alert('Error occurred. Please retry.')
         return
       }
+
+      success('Contract deployed successfully')
 
       push(`/contracts`)
     } catch (error) {
