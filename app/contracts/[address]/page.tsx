@@ -146,7 +146,7 @@ export default function DetailsPage() {
 
                   <div className="divider"></div>
 
-                  Let's Mint
+                  Let&apos;s Mint
                   <div>
                     <div className="form-control">
                       <label className="label">
