@@ -15,11 +15,11 @@ https://nft-faucet-ten.vercel.app/
 
 ### Demo Video
 
-TODO:
+https://youtu.be/3ql-05lEtT8
 
 ## Architecture
 
-<img src="docs/architecture.png" width="500"><br>
+<img src="docs/architecture2.png" width="900"><br>
 
 ### Used Technologies
 
