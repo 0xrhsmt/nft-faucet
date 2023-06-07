@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useAccount, useConnect, useNetwork } from 'wagmi';
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
+import { PlusIcon } from '@heroicons/react/24/solid'
+
 
 type Contract = {
   chainId: number
@@ -65,32 +67,38 @@ export default function IndexPage() {
     <div>
       {
         isConnected ? (
-          <div className='p-8'>
-            <div className='flex justify-between items-center mb-8'>
-              <div className='text-3xl'>
-                Contracts
-              </div>
-              <Link className="btn btn-secondary" href="/contracts/new">DEPLOY NEW CONTRACT</Link>
-            </div>
+          <div className="min-h-screen mt-[-64px] pt-[64px] bg-base-200">
+            <div className='px-20 py-6'>
 
-            <div className="grid grid-cols-4 gap-4">
-              {contracts.map((c) => (
-                <div key={c.contractAddress} className="card w-96 bg-base-100 shadow-xl m-auto">
-                  <figure><img src={c.metadataImage} alt="contract-image" /></figure>
-                  <div className="card-body">
-                    <h2 className="card-title">
-                      {c.metadataName}
-                      <ChainBadge chainId={c.chainId} />
-                    </h2>
-                    <p>{c.metadataDescription}</p>
-                    <div className="card-actions justify-end">
-                      <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
-                        Details
-                      </Link>
+              <div className='flex flex-row justify-between items-center mb-4'>
+                <div className='text-3xl'>
+                  Contracts
+                </div>
+                <Link className="btn btn-secondary text-white" href="/contracts/new">
+                  <PlusIcon className="h-6 w-6 font-bold" />
+                  DEPLOY NEW CONTRACT
+                  </Link>
+              </div>
+
+              <div className="grid grid-cols-4 gap-4">
+                {contracts.map((c) => (
+                  <div key={c.contractAddress} className="card w-96 bg-base-100 shadow-xl m-auto">
+                    <figure><img src={c.metadataImage} alt="contract-image" /></figure>
+                    <div className="card-body">
+                      <h2 className="card-title">
+                        {c.metadataName}
+                        <ChainBadge chainId={c.chainId} />
+                      </h2>
+                      <p>{c.metadataDescription}</p>
+                      <div className="card-actions justify-end">
+                        <Link href={`/contracts/${c.contractAddress}`} className="btn btn-secondary">
+                          Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+            </div>
             </div>
           </div>
         ) : (
