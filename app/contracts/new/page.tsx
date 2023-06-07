@@ -65,7 +65,7 @@ export default function NewPage() {
   }, [isValid, isLoading, walletAddress, chain?.id])
 
   return (
-    <div className="hero min-h-screen mt-[-64px] pt-[64px] bg-base-200">
+    <div className="flex flex-col justify-center items-center min-h-screen mt-[-64px] pt-[64px] bg-base-200">
       <div className="container mx-auto px-4">
         <div className="flex flex-col justify-center overflow-hidden">
           <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
